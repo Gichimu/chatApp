@@ -1,11 +1,12 @@
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const socketIo = require("socket.io");
 
 const PORT = process.env.PORT || 8080;
 
 const app = express();
-app.use(express.static(path.join(__dirname, "./ng-src/dist")));
+app.use(express.static(path.join(__dirname, "./public")));
 const server = http.createServer(app);
 const io = socketIo(server);
 const formatMsg = require("./messageFormat");
