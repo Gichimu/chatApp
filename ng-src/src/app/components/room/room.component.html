@@ -9,17 +9,17 @@
   </mat-toolbar>
 
   <mat-drawer-container class="example-container">
-    <mat-drawer #drawer mode="side" >
-      <p>Users online:</p>
-      <mat-divider></mat-divider>
-
+    <mat-drawer class="text-center" mode="side" #drawer>
+      <h4>Users online</h4>
+      <hr>
       <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let user of currentUsers"
-          ><mat-icon>sentiment_satisfied_alt</mat-icon><b>{{ user }}</b></mat-list-item
+          ><mat-icon>sentiment_satisfied_alt</mat-icon
+          ><b> {{ user }}</b></mat-list-item
         >
       </mat-list>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content class="drawer">
       <!-- <div class="alert alert-primary alert-dismissible fade show" role="alert" id="alert">
           <strong>{{username}}</strong> has joined the chat.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -27,16 +27,33 @@
           </button>
         </div> -->
 
-      <div #messageContainer *ngIf="chatMessages; else elseBlock" class="chat" >
-        <mat-list role="list" #window>
-          <mat-list-item role="listitem" class="listitem" *ngFor="let chat of chatMessages">
+      <div *ngIf="chatMessages; else elseBlock" class="chat">
+        <div class="message-container" *ngFor="let chat of chatMessages">
+          <div *ngIf="isSender; else receiverBlock">
             <div class="alert alert-primary">
-              <small class="meta"><strong>{{ chat.username }}<span> {{ chat.timestamp }}</span></strong></small>
-              <mat-divider></mat-divider>
-              <p class="message">{{ chat.text }}</p>
+              <small class="meta"
+                ><strong
+                  >{{ chat.username }}<span> {{ chat.timestamp }}</span></strong
+                ></small
+              ><br />
+              <!-- <hr> -->
+  
+              {{ chat.text }}
             </div>
-          </mat-list-item>
-        </mat-list>
+          </div>
+          <ng-template #receiverBlock>
+            <div class="alert chat-right alert-primary">
+              <small class="meta"
+                ><strong
+                  >{{ chat.username }}<span> {{ chat.timestamp }}</span></strong
+                ></small
+              ><br />
+              <!-- <hr> -->
+  
+              {{ chat.text }}
+            </div>
+          </ng-template>
+        </div>
       </div>
       <ng-template #elseBlock>
         <div class="chat-bubble chat-text">Welcome to the chat, boi</div>

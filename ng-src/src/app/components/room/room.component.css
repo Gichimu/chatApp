@@ -1,10 +1,4 @@
-:root {
-	--dark-color-a: #667aff;
-	--dark-color-b: #7386ff;
-	--light-color: #e6e9ff;
-	--success-color: #5cb85c;
-	--error-color: #d9534f;
-}
+
 
 mat-card {
     width: 70%;
@@ -47,6 +41,7 @@ mat-drawer {
 mat-drawer-content {
     background-color: lavender;
     padding: 2%;
+    
 }
 
 
@@ -80,11 +75,19 @@ a {
     
 }
 
+.message-container {
+    overflow-x: hidden;
+    /* padding: 1%; */
+    display: flex;
+    
+}
+
 .alert {
-    padding: 1%;
-    font-size: 0.8rem;  
-    margin-bottom: 4%;
-    /* position: relative; */
+    
+    font-size: 0.8rem; 
+    max-width: 50%;
+    display: inline-block;
+    overflow-wrap: break-word;
 }
 
 .listitem {
@@ -103,3 +106,13 @@ a {
     /* align-items: flex-end; */
 }
 
+.avatar {
+    border: 1px solid black;
+    max-width: 5%;
+    max-height: 5%;
+    border-radius: 50%;
+}
+
+.chat-right {
+    text-align: right;
+}

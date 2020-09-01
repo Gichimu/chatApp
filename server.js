@@ -1,9 +1,9 @@
 const express = require("express");
+const path = requuire("path");
 const http = require("http");
-const path = require("path");
 const socketIo = require("socket.io");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.static(path.join(__dirname, "./public")));

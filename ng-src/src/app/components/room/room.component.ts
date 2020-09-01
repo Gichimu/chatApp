@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { SocketService } from './../../services/socket.service';
 import { AuthService } from './../../services/auth.service';
 
-import { Component, OnInit, ViewChild, AfterViewInit, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, QueryList, ElementRef, AfterViewChecked } from '@angular/core';
 import { auth } from 'firebase/app';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInput } from '@angular/material/input';
@@ -12,15 +12,16 @@ import { MatInput } from '@angular/material/input';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, AfterViewChecked {
 
   chatMessage: any;
   msg = {
     username: '',
-    text: '',
+    text: ''
   };
   username: string;
   sidenavOpen = false;
+  isSender: boolean;
   currentUsers: string[] = [];
   chatMessages: any[] = [];
   user$: Observable<firebase.User> = this.authservice.user$;
@@ -29,6 +30,14 @@ export class RoomComponent implements OnInit {
     private readonly authservice: AuthService,
     private snackbar: MatSnackBar
   ) {}
+
+  ngAfterViewChecked(): void {
+    let d = document.querySelector('.drawer');
+    if(d)
+    {
+      d.scrollTop = d.scrollHeight;
+    }
+  }
 
   ngOnInit(): void {
     // get the user details
@@ -43,12 +52,11 @@ export class RoomComponent implements OnInit {
     // get the welcome chat message
     this.socket.listen('message').subscribe((chat) => {
       this.chatMessages.push(chat);
+      this.checkSender();
     });
 
     console.log(this.chatMessages);
   }
-
-  
 
   sendMessage(): void {
     this.msg.username = this.username;
@@ -59,5 +67,13 @@ export class RoomComponent implements OnInit {
 
   leaveChat(): void {
     this.socket.disconnect();
+  }
+
+  checkSender(): void {
+    if(this.chatMessages[0].username === this.username){
+      this.isSender = true;
+    }else{
+      this.isSender = false;
+    }
   }
 }
